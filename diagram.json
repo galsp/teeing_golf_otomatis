@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "author": "Anonymous maker",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-nano", "id": "nano", "top": -168, "left": -374.9, "attrs": {} },
+    {
+      "type": "wokwi-max7219-matrix",
+      "id": "matrix1",
+      "top": -57,
+      "left": -741.36,
+      "attrs": { "chain": "4" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": -147.4,
+      "left": -499.2,
+      "attrs": { "color": "green", "xray": "1" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn2",
+      "top": -147.4,
+      "left": -604.8,
+      "attrs": { "color": "green", "xray": "1" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn3",
+      "top": -147.4,
+      "left": -700.8,
+      "attrs": { "color": "green", "xray": "1" }
+    },
+    {
+      "type": "wokwi-max7219-matrix",
+      "id": "matrix2",
+      "top": -57,
+      "left": -395.76,
+      "attrs": { "chain": "4" }
+    },
+    { "type": "wokwi-servo", "id": "servo1", "top": 74.8, "left": -240, "attrs": {} },
+    { "type": "wokwi-a4988", "id": "drv1", "top": -302.4, "left": -302.4, "attrs": {} },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper2",
+      "top": -476.39,
+      "left": -229.97,
+      "attrs": { "size": "17", "arrow": "red", "display": "angle" }
+    },
+    { "type": "wokwi-slide-switch", "id": "sw1", "top": -274, "left": -390.5, "attrs": {} }
+  ],
+  "connections": [
+    [ "drv1:DIR", "nano:8", "gold", [ "h0" ] ],
+    [ "drv1:STEP", "nano:9", "orange", [ "h0" ] ],
+    [ "drv1:GND.1", "nano:GND.1", "black", [ "v9.68", "h57.75", "v124.8", "h-38.4" ] ],
+    [ "drv1:VDD", "nano:5V", "red", [ "h76.95", "v153.68", "h-76.8" ] ],
+    [ "stepper2:A-", "drv1:2B", "green", [ "v0" ] ],
+    [ "stepper2:A+", "drv1:2A", "green", [ "v0" ] ],
+    [ "stepper2:B+", "drv1:1A", "green", [ "v0" ] ],
+    [ "stepper2:B-", "drv1:1B", "green", [ "v0" ] ],
+    [ "drv1:SLEEP", "drv1:RESET", "green", [ "h-19.2", "v-9.6", "h9.6" ] ],
+    [ "matrix2:V+.2", "matrix1:V+", "green", [ "v0", "h-9.44" ] ],
+    [ "matrix2:GND.2", "matrix1:GND", "black", [ "h0" ] ],
+    [ "matrix2:DOUT", "matrix1:DIN", "green", [ "h0" ] ],
+    [ "matrix2:CS.2", "matrix1:CS", "green", [ "h0" ] ],
+    [ "matrix2:CLK.2", "matrix1:CLK", "green", [ "h0" ] ],
+    [ "matrix2:V+", "nano:5V", "red", [ "v-48", "h-192" ] ],
+    [ "matrix2:GND", "nano:GND.1", "black", [ "h9.6", "v-67.2", "h-182.4" ] ],
+    [ "matrix2:DIN", "nano:10", "limegreen", [ "h19.2", "v-134.4", "h-297.6" ] ],
+    [ "matrix2:CS", "nano:11", "yellow", [ "h38.4", "v-134.4", "h-326.4" ] ],
+    [ "matrix2:CLK", "nano:12", "cyan", [ "h57.6", "v-134.4", "h-355.2" ] ],
+    [ "nano:GND.1", "btn1:2.r", "black", [ "v9.6", "h-201.6" ] ],
+    [ "btn1:2.l", "btn2:2.r", "black", [ "h0" ] ],
+    [ "btn2:2.l", "btn3:2.r", "black", [ "h0" ] ],
+    [ "nano:7", "btn1:1.r", "green", [ "v-9.6", "h-124.8" ] ],
+    [ "nano:6", "btn2:1.r", "green", [ "v-19.2", "h-230.4" ] ],
+    [ "nano:5", "btn3:1.r", "green", [ "v-28.8", "h-345.6" ] ],
+    [ "drv1:GND.1", "sw1:2", "black", [ "v9.68", "h-124.75" ] ],
+    [ "sw1:1", "nano:4", "green", [ "v28.8", "h28.8" ] ]
+  ],
+  "dependencies": {}
+}
