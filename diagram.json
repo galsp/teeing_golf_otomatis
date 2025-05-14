@@ -48,7 +48,14 @@
       "left": -229.97,
       "attrs": { "size": "17", "arrow": "red", "display": "angle" }
     },
-    { "type": "wokwi-slide-switch", "id": "sw1", "top": -274, "left": -390.5, "attrs": {} }
+    { "type": "wokwi-slide-switch", "id": "sw1", "top": -274, "left": -390.5, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton-6mm",
+      "id": "btn4",
+      "top": -213.4,
+      "left": -249.6,
+      "attrs": { "color": "green", "xray": "1" }
+    }
   ],
   "connections": [
     [ "drv1:DIR", "nano:8", "gold", [ "h0" ] ],
@@ -77,7 +84,9 @@
     [ "nano:6", "btn2:1.r", "green", [ "v-19.2", "h-230.4" ] ],
     [ "nano:5", "btn3:1.r", "green", [ "v-28.8", "h-345.6" ] ],
     [ "drv1:GND.1", "sw1:2", "black", [ "v9.68", "h-124.75" ] ],
-    [ "sw1:1", "nano:4", "green", [ "v28.8", "h28.8" ] ]
+    [ "sw1:1", "nano:4", "green", [ "v28.8", "h28.8" ] ],
+    [ "btn4:2.l", "nano:RESET.2", "green", [ "v10", "h9.6" ] ],
+    [ "drv1:GND.1", "btn4:1.r", "black", [ "v0.08", "h28.95" ] ]
   ],
   "dependencies": {}
 }
