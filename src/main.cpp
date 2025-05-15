@@ -16,12 +16,12 @@
 // MD_Parola myDisplay = MD_Parola(HARDWARE_TYPE, DATA_PIN, CLK_PIN, CS_PIN, MAX_DEVICES);
 MD_MAX72XX mx = MD_MAX72XX(MD_MAX72XX::PAROLA_HW, DATA_PIN, CLK_PIN, CS_PIN, MAX_DEVICES);
 
-#define FORWARD 1 // turun
-#define REVERSE 0 // naik
+#define FORWARD 0 // turun
+#define REVERSE 1 // naik
 
 #define naik 0
 #define turun 1
-#define Tdefault 100
+#define Tdefault 0 //nilai default saat reset
 
 #define PIN_DIR 8
 #define PIN_STEP 9
@@ -42,20 +42,27 @@ int bar = 0;
 #define pindown 5
 #define pinrest 7
 #define pinsw 4
+
+int pushStep = 5; //5 dalam arti tiap di klik naik 5
+int pushtoStep = 5; //5 dalam arti 1:5
+int range = 0; //nilai awal
+
 int posisi = 0;
-int range = 100;
+
 void setup()
 {
-  // Serial.begin(9600);
+  Serial.begin(9600);
   posisi = epread(saveP);
-  
+
   bar = epread(saveT);
-  if (bar == -1) bar = range;
-  if (posisi == -1 ) posisi = 1;
-  
+  if (bar == -1)
+    bar = range;
+  if (posisi == -1)
+    posisi = 1;
+
   Serial.print("posisi ");
   Serial.println(posisi);
-  
+
   stepper.begin();
   mx.begin();
   mx.clear();
@@ -78,7 +85,7 @@ void loop()
   if (digitalRead(pinsw) == 0 && posisi == 1)
   {
     posisi = 0;
-    stepper.step(FORWARD, bar);
+    stepper.step(FORWARD, bar * pushtoStep);
     Serial.println("turun");
     epwrite(saveP, naik);
   }
@@ -87,7 +94,7 @@ void loop()
     count++;
     print1(count);
     posisi = 1;
-    stepper.step(REVERSE, bar);
+    stepper.step(REVERSE, bar * pushtoStep);
     Serial.println("naik");
     epwrite(saveP, turun);
   }
@@ -96,24 +103,39 @@ void loop()
 
   if (digitalRead(pinsw) == 0)
   {
+
     if (digitalRead(pinup) == 0)
     {
-      bar += 5;
-      stepper.step(FORWARD, 5);
-      // mx.clear();
-      print2(bar);
-      delay(100);
-      epwrite(saveT, bar);
+      if (bar + pushStep > 999)
+      {
+        print2(bar);
+      }
+      else
+      {
+        bar += pushStep;
+        stepper.step(FORWARD, pushStep * pushtoStep);
+        // mx.clear();
+        print2(bar);
+        delay(100);
+        epwrite(saveT, bar);
+      }
     }
 
     if (digitalRead(pindown) == 0)
     {
-      bar -= 5;
-      stepper.step(REVERSE, 5);
-      // mx.clear();
-      print2(bar);
-      delay(100);
-      epwrite(saveT, bar);
+      if (bar - pushStep < 0)
+      {
+        print2(bar);
+      }
+      else
+      {
+        bar -= pushStep;
+        stepper.step(REVERSE, pushStep * pushtoStep);
+        // mx.clear();
+        print2(bar);
+        delay(100);
+        epwrite(saveT, bar);
+      }
     }
   }
 
